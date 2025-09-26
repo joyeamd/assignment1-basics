@@ -45,7 +45,6 @@ def process_chunk(args):
         matches = re.finditer(pattern, text_chunk)
         for match in matches:
             token = match.group(0)
-            # Convert to tuple of bytes objects (like bpe.py)
             utf8_bytes = list(token.encode('utf-8'))
             token_bytes = tuple(bytes([i]) for i in utf8_bytes)
             if len(token_bytes) >= 2:  # Only consider tokens of length >= 2
@@ -217,14 +216,3 @@ def train_bpe(input_path : str, vocab_size : int, special_tokens : list[str]):
             break
         pretoken_counts = new_pretoken_counts
     return vocab, merges
-
-# input_path = "/home/joye/learning/cs336/assignment1-basics/tests/fixtures/corpus.en"
-
-# vocab, merges = train_bpe(
-#     input_path=input_path,
-#     vocab_size=500,
-#     special_tokens=["<|endoftext|>"],
-# )
-
-# for i, m in enumerate(merges):
-#     print(i, m)
